@@ -1,7 +1,10 @@
+const env = require('dotenv')
 const express = require('express')
 const path = require('path')
-const config = require('./config')
 const people = require('./data/people.json')
+
+// Exercise Six (1 of 2)
+env.config()
 
 // Instantiate App
 const app = express()
@@ -26,8 +29,9 @@ app.get('/api/people', (req, res) => {
 
 // Exercise Two (1 of 2)
 app.listen(
-  config.PORT,
-  () => console.log(`Now Listening on Port ${config.PORT}...`)
+  // Exercise Six (2 of 2)
+  process.env.PORT,
+  () => console.log(`Now Listening on Port ${process.env.PORT}...`)
 )
 
 // Exercise One

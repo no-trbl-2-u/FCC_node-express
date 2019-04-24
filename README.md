@@ -36,7 +36,23 @@
     * Here we'll create a directory called data and place our json in there
   * Then using ```app.get()```
  
-* Use the .env File
+* ~~Use the .env File~~
+  * The .env file is a hidden file used to store **environment variables** ie. PORT, Database URL, API Keys, etc.
+  * First, create your .env file in your root directory.
+    * The format for the variables declared here is as follows:
+      * ```ENV_VARIABLE="value"```
+      * Variable names, since their CONSTANTs, should be uppercase
+      * There musn't be any spaces between the "=" in the assignment
+  * Next, you'll need a package called **dotenv**
+    * In your terminal, ```npm i dotenv --save```
+  * Then, as early as possible in your server.js...
+    * ```require('dotenv').config()``` - This will import your environment variables and place then in node's ```process.env``` object for you to be able to access your environment variables.
+    * In our case, I like my requires to be together, so I split the function call.
+      * server.js - line 1 (Imported the dotenv module)
+      * server.js - line 7 (Called the _.config() method to place variables inside process.env)
+  * Lastly, in order to use the variables, you can reference them off of the process.env object literal
+    * server.js - line 32, 33 (```process.env.PORT ```)
+
 * Implement a Root-Level Request Logger Middleware
 * Chain Middleware to Create a Time Server
 * Get Route Parameter Input from the Client
@@ -62,3 +78,7 @@
 
 * ```app.get()``` is used to respond to **GET** requests from the client. 
   * GET is used in cases where the server will send information to the client **without modifying anything server-side**
+
+* ```.env``` is normally included in the ```.gitignore``` in order to prevent your secret environment variables from being made public.
+  * In our case, we'll leave it as is for educational purposes. It is important however to keep prevent this file from being posted online, ie. Github, Gitlab, etc...
+* 
