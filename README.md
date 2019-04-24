@@ -81,4 +81,9 @@
 
 * ```.env``` is normally included in the ```.gitignore``` in order to prevent your secret environment variables from being made public.
   * In our case, we'll leave it as is for educational purposes. It is important however to keep prevent this file from being posted online, ie. Github, Gitlab, etc...
-* 
+
+* Using the ```dotenv``` npm package is a typical best practice to seperate the app configuration from the app code.
+  * An alternative to this methodology, is to create a ```.env.js``` file, place your environment variables in a single object literal, export that single object, and then import and reference that object in your server.js
+  * The downside to this, is in your deployment stage, when you have environment variables stored in **production**, they'll end up being seperate from your variables stored in **development**. (ie. ```config.PORT``` vs ```process.env.PORT```)
+
+* ~~NEXT~~
