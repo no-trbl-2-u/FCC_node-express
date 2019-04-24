@@ -1,23 +1,30 @@
 const express = require('express')
 const path = require('path')
 const config = require('./config')
+const people = require('./data/people.json')
 
 // Instantiate App
 const app = express()
 
-// Serve up the scripts and styles from ./public
+// Exercise Four
 app.use(express.static(__dirname + '/public'))
 
-// Serve up index page from ./views
+// Exercise Three
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname + '/views/index.html'))
 })
 
+// Exercise Two (2 of 2)
 app.get('/exercise-two', (req, res) => {
   res.send("Hello Express")
 })
 
-// Listen to PORT provided by config
+// Exercise Five
+app.get('/api/people', (req, res) => {
+  res.send(people)
+})
+
+// Exercise Two (1 of 2)
 app.listen(
   config.PORT,
   () => console.log(`Now Listening on Port ${config.PORT}...`)
