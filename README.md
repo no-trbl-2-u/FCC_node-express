@@ -71,8 +71,8 @@
     * You can also chain multiple middleware functions like so:
       * ```js
         app.get('/yourPath',
-          mWareFN1, // Must set data to req.results then call next()
-          (req, res) => res.send(req.results)
+          mWareFN1, // Must set data to req.CUSTOM_KEY then call next()
+          (req, res) => res.send(req.CUSTOM_KEY)
         )
         ```
   * To create our ```getTime``` middleware function, all we have to do is instantiate a new date object:
@@ -84,6 +84,9 @@
     * ```server.js``` - line 56
 
 * Get Route Parameter Input from the Client
+  * 
+
+
 * Get Query Parameter Input from the Client
 * Use body-parser to Parse POST Requests
 * Get Data from POST Requests
