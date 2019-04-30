@@ -54,7 +54,35 @@
     * server.js - line 32, 33 (```process.env.PORT ```)
 
 * Implement a Root-Level Request Logger Middleware
+  * A Middleware function is in the following format:
+    * ```js 
+      function middleWareFunction(request, response, next){
+        doSomething()
+        next()
+      }
+      ```
+  * To use your middleware function with every route, place an ```app.use(middleWareFunction)``` before all your routes
+  * Now, we'll use this format and take advantage of:
+    ```req.method```, ```req.path```, and ```req.ip```, all of which are metadata surrounding our HTTP traffic
+
 * Chain Middleware to Create a Time Server
+  * Middleware can be mounted to a **SPECIFIC** route by using the following format:
+    * ```app.METHOD(path, middlewareFunction)```
+    * You can also chain multiple middleware functions like so:
+      * ```js
+        app.get('/yourPath',
+          mWareFN1, // Must set data to req.results then call next()
+          (req, res) => res.send(req.results)
+        )
+        ```
+  * To create our ```getTime``` middleware function, all we have to do is instantiate a new date object:
+    * ```customMiddleware.js``` - line 17
+  * Next, attach that new date object to the request object that's passed to the middleware function and route
+    * ```customMiddleware.js``` - line 18
+  * Then call ```next()``` to make sure the middleware function continues on
+  * Lastly, create your route using ```app.get(...)``` and use ```res.send(req.customProperty)```
+    * ```server.js``` - line 56
+
 * Get Route Parameter Input from the Client
 * Get Query Parameter Input from the Client
 * Use body-parser to Parse POST Requests
@@ -86,4 +114,18 @@
   * An alternative to this methodology, is to create a ```.env.js``` file, place your environment variables in a single object literal, export that single object, and then import and reference that object in your server.js
   * The downside to this, is in your deployment stage, when you have environment variables stored in **production**, they'll end up being seperate from your variables stored in **development**. (ie. ```config.PORT``` vs ```process.env.PORT```)
 
-* ~~NEXT~~
+* Morgan is an express middleware function used to create log files or the incoming HTTP requests.
+  * By creating a ```writeStream``` using the internal ```fs``` library, we're able to take the HTTP requests and create an access.log file
+
+* In an effort to keep our ```server.js``` file a little neater, I decided to keep our middleware definitions in a seperate file.
+  * We'll be defining our Middleware functions in ```customMiddleware.js```
+  * Import: server.js - line 7
+
+* When **Chaining** middleware functions, to be able to share any results, just attach a ```{key: value}``` pair to your ```req``` object. When you call ```next()```, the next middleware function will have access to that data.
+  * Here is an example:
+    * ```js 
+      const mWare1 = (req, res, next) => {req.data = "data"; next()};
+      const mWare2 = (req, res, next) => {req.data = req.data.toUpperCase(); next()};
+      app.get('', mWare1, mWare2, (req, res) => res.send(req.data))
+      ```
+    * As arbitrary as the example is, it's very powerful to be able to persist data, chain small modular functions, and send the results back to the user.
