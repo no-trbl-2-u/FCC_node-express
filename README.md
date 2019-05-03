@@ -53,7 +53,7 @@
   * Lastly, in order to use the variables, you can reference them off of the process.env object literal
     * server.js - line 32, 33 (```process.env.PORT ```)
 
-* Implement a Root-Level Request Logger Middleware
+* ~~Implement a Root-Level Request Logger Middleware~~
   * A Middleware function is in the following format:
     * ```js 
       function middleWareFunction(request, response, next){
@@ -64,6 +64,7 @@
   * To use your middleware function with every route, place an ```app.use(middleWareFunction)``` before all your routes
   * Now, we'll use this format and take advantage of:
     ```req.method```, ```req.path```, and ```req.ip```, all of which are metadata surrounding our HTTP traffic
+  * Lastly, 
 
 * Chain Middleware to Create a Time Server
   * Middleware can be mounted to a **SPECIFIC** route by using the following format:
@@ -84,10 +85,16 @@
     * ```server.js``` - line 56
 
 * Get Route Parameter Input from the Client
-  * 
+  * In order to accomplish this task, we'll need to use ```req.params``` which will provide us any queries passed via the url
+    * ```req.params``` returns undefined, unless there is a dynamic URL
+  * We'll also need to use a **dynamic url** in our express server
+    * For example, ```app.get(':/word', (...) => {...})```
+    * Now any URL passed, that isn't already accounted for, will be directed to this particular route
+  * Server.js - line 58 (dynamic URL) + 59 (req.params)
 
 
 * Get Query Parameter Input from the Client
+  * 
 * Use body-parser to Parse POST Requests
 * Get Data from POST Requests
 
@@ -132,3 +139,5 @@
       app.get('', mWare1, mWare2, (req, res) => res.send(req.data))
       ```
     * As arbitrary as the example is, it's very powerful to be able to persist data, chain small modular functions, and send the results back to the user.
+
+* When using dynamic URLs, make sure it is the last URL in your code to be registered or else ```"/:word"``` before "/word2" would cause word2 to be picked up by the dynamic URL and will redirect you to that path.

@@ -8,6 +8,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+
 }
 
 h1 {
@@ -22,4 +24,8 @@ h1 {
   border-bottom: 2px solid white;
 
   text-shadow: 2px 2px 4px rgb(152, 151, 151);
+}
+
+button {
+  color: red;
 }
