@@ -1,12 +1,21 @@
 # Free Code Camp's Node Express Tutorial
 *Due to a few minor complications with glitch.com I decided to handle this tutorial locally.*
 
+This is less of an article and more of a reference and guide to use as you follow along with FreeCodeCamp.com's [Node Express Tutorial](https://learn.freecodecamp.org/apis-and-microservices/basic-node-and-express). All you will need to follow along is to clone [this repository](https://github.com/no-trbl-2-u/FCC_node-express.git).
+
+```sh
+git clone https://github.com/no-trbl-2-u/FCC_node-express.git
+cd FCC_node-express
+npm install
+npm run start
+```
+
 ## Curriculum
-* ~~Meet the Node console~~
+* Meet the Node consoles
   * Log "Hello World" from the server
   * server.js - line 23
 
-* ~~Start a Working Express Server~~
+* Start a Working Express Server
   * At the bottom of your code, use app.listen(PORT, HANDLER) to begin listening for other app.METHODs
     * server.js - line 21
   * Create another route via ```app.get()```
@@ -15,7 +24,7 @@
   * set its path as the first argument to ```app.get()```
   * send "Hello Express" via the ```app.send()``` method
 
-* ~~Serve an HTML File~~
+* Serve an HTML File
   * Create another route and set its path
   * This time, instead of sending a string like "Hello Express":
     * Serve an HTML file you're written using the ```app.sendFile()``` method
@@ -23,20 +32,20 @@
       * Then, use the inherit global variable ```__dirname``` to calculate the path passed to ```path.join()```
       * server.js - line 12
 
-* ~~Serve Static Assets~~
+* Serve Static Assets
   * Create a directory that will be served to the client, typically "public", "static", "client" etc...
   * Using ```app.use()```, signal the app to use your new directory via the static method on the express object called ```express.static()```
   * ```express.static()``` is formatted as such:
     * express.static(PATH_TO_THE_STATIC_DIRECTORY)
     * Since this is another case of an **absolute path**, we will be using ```__dirname``` and ```path.join()```
 
-* ~~Serve JSON on a Specific Route~~
+* Serve JSON on a Specific Route
   * To implement a **RESTful API**, we'll need to serve up a json file of our making
   * First, create your .json
     * Here we'll create a directory called data and place our json in there
   * Then using ```app.get()```
  
-* ~~Use the .env File~~
+* Use the .env File
   * The .env file is a hidden file used to store **environment variables** ie. PORT, Database URL, API Keys, etc.
   * First, create your .env file in your root directory.
     * The format for the variables declared here is as follows:
@@ -53,7 +62,7 @@
   * Lastly, in order to use the variables, you can reference them off of the process.env object literal
     * server.js - line 32, 33 (```process.env.PORT ```)
 
-* ~~Implement a Root-Level Request Logger Middleware~~
+* Implement a Root-Level Request Logger Middleware
   * A Middleware function is in the following format:
     * ```js 
       function middleWareFunction(request, response, next){
@@ -94,10 +103,44 @@
 
 
 * Get Query Parameter Input from the Client
-  * 
-* Use body-parser to Parse POST Requests
-* Get Data from POST Requests
+  * A query in the URL is in the following format:
+    * ```yourpage.com/yourRoute?key=value&key2=value2```
+      * Note the "?" to begin query and the "&" to seperate multiple queries
+  * In order to access the query in your code:
+    * ```req.query``` will give you your entire query object
+    * ```req.query[key]``` or ```req.query.key``` will get you the direct value
+      * Note: It is important to create logic flow here to direct the User with feedback
+      * server.js - line 66 (logic flow)
+    * server.js  - line 67 (sending direct values)
 
+* Use body-parser to Parse POST Requests
+  * Mounting the body-parser is as easy as:
+    * ```js const bodyParser = require('body-parser')```
+    * Or in my case:
+      * server.js - line 6 (const parse = ...)
+
+* Get Data from POST Requests
+  * Now in order to demonstrate this, I had to make the simplest form possible to get to the point:
+    * views/form.html - lines 10 - 18
+    * Your form tag just needs to be fed the method to be used when the form is submitted and most importantly, the route that will receive the information.
+      * ```html
+        <form action="/form" method="POST">
+          <...>
+        </form>
+        ```
+    * By creating a simple "sumbit" input, whatever is in the ```<form>...</form>``` will get sent to our server at the path designated in the form tag.
+      * ```html
+        <input type="submit" value="submit" >
+        ```
+
+  * Now to access this information from the form, we'll need to make sure we have a route named ```/form```:
+    * We'll have to use the ```app.all(PATH).get(GET_HANDLER).post(POST_HANDLER)```
+      * The **GET** method is used when they visit the ```/form``` page
+        * **GET** responds with an html page
+        * server.js - line 75
+      * The **POST** method is used when they submit the form
+        ** **POST** responds with raw html containing the input from the user
+        * server.js - line 77
 ## Notes
 * Routes take the following structure:
   * app.METHOD(PATH: string, HANDLER: (req, res): void)
@@ -141,3 +184,5 @@
     * As arbitrary as the example is, it's very powerful to be able to persist data, chain small modular functions, and send the results back to the user.
 
 * When using dynamic URLs, make sure it is the last URL in your code to be registered or else ```"/:word"``` before "/word2" would cause word2 to be picked up by the dynamic URL and will redirect you to that path.
+
+* Something to note about generated HTML from the res.send method. I don't think it receives the styles loaded when the page is initially loaded since they are created after it is loaded.

@@ -29,11 +29,17 @@ const app = express()
 const logger = morgan('common', {stream: logStream})
 app.use(logger)
 
-// Exercise Six - Console Logger
+// Exercise Seven - Console Logger
 app.use(consoleLogger)
 
-// Exercise Four
+// Exercise Four - Serve Static Assets
 app.use(express.static(__dirname + '/public'))
+
+// Exercise Ten (1 of 2) - Using body-parser to parse GET + POST requests
+app.use(parse.json())     // For parsing application/json
+app.use(parse.urlencoded( // For parsing application/x-www-form-urlencoded
+  { extended: true }
+))
 
 //__________________________________Routes___________________________________//
 
@@ -42,22 +48,21 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname + '/views/index.html'))
 })
 
-// Exercise Two (2 of 2)
+// Exercise Two (2 of 2) - Create your first route with app.get(PATH, HANDLER)
 app.get('/exercise-two', (req, res) => res.send("Hello Express"))
 
-// Exercise Five
+// Exercise Five - Create an "api" route to serve JSON data
 app.get('/api/people', (req, res) => res.send(people))
 
 // Experiment in data persistance within chained middleware functions
 app.get('/baseData', persistData, (req, res) => res.send(req.data))
 app.get('/alterData', persistData, alterData, (req, res) => res.send(req.data))
 
-// Exercise Seven
+// Exercise Eight
 app.get('/now', getTime, (req, res) => res.send(req.time))
 
-// Exercise Nine
-app.route("/name")
-  .get((req, res) => {
+// Exercise Ten
+app.get("/name",(req, res) => {
     // require the correct URL parameters
     if(req.query.first && req.query.last){
       res.send({name: `${req.query.first} ${req.query.last}`})
@@ -65,11 +70,29 @@ app.route("/name")
       res.send("Incorrect query Parameters, Usage: /name?first=_&last=_")
     }
   })
-  .post((req, res) => res.send(req.query))
 
-// Exercise Ten (Body Parser for POST requests)
+// Exercise Eleven (2 of 2) - HTML for GET requests and Body Parser for POST requests
+app.route("/post")
+  // When method=GET: Send an html form
+  .get((req, res) => res.sendFile(path.join(__dirname + '/views/form.html')))
+  // When method=POST: Send a response containing their input
+  .post((req, res) => {
+    // NOTE: Does not receive the style from styles.css
+    res.send(`<h1 class="response">Did you just type ${req.body.text}?</h1>`)
+  })
 
-// Exercise Eight
+// Experiment to see contents of request
+// A little helper route to show all the keys on the request object
+app.get('/req', (req, res) => {
+  let list = + "<ul>" + Object.keys(req)
+    .reduce(
+      (accumKey, eaKey) => accumKey + " " + "<li>" + eaKey + "</li>"
+      , " <-- How do I get rid of this?"
+    ) + "</ul>"
+  res.send(`${list}`)
+})
+
+// Exercise Nine
 app.get('/:word', (req, res) => res.send(`You entered in ${req.params.word}!`))
 
 //_______________________________Listen______________________________________//
