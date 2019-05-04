@@ -62,4 +62,3 @@ const app = express()
 // *hint - Use your new .env file to create a PORT for your app.listen()
 
 // Exercise One (console.log)
-

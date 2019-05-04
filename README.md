@@ -1,7 +1,11 @@
 # Free Code Camp's Node Express Tutorial
-*Due to a few minor complications with glitch.com I decided to handle this tutorial locally.*
+*Due to a few minor complications with glitch.com* 😞 *I decided to handle this tutorial locally. I created my own VERY simplistic set of views to go along with the tutorial.*
 
-This is less of an article and more of a reference and guide to use as you follow along with FreeCodeCamp.com's [Node Express Tutorial](https://learn.freecodecamp.org/apis-and-microservices/basic-node-and-express). All you will need to follow along is to clone [this repository](https://github.com/no-trbl-2-u/FCC_node-express.git).
+This is less of an article and more of a reference and guide to use as you follow along with FreeCodeCamp.com's [Node Express Tutorial](https://learn.freecodecamp.org/apis-and-microservices/basic-node-and-express). All you will need to follow along is to clone [this repository](https://github.com/no-trbl-2-u/FCC_node-express.git) and follow the instructions below. I wanted to create something that could help fellow FCC curriculum users, but with a little extra. I plan to further elaborate on several other ideas, like middleware composition, static typing, and possibly even using Algebraic Data Types to handle our exceptions. For now, this is just what you'll need to get up and running with node Express. 💻
+
+### Have fun!
+
+*Also, if you feel pretty confident, and want to help turn this tutorial into its own entity, beyond what FCC has to offer, send a PR and let's take this tutorial even further 🚀. I would doubly recommend you to play with ```./styles.css``` and pretty the routes up a little bit* 😉
 
 ```sh
 git clone https://github.com/no-trbl-2-u/FCC_node-express.git
@@ -10,12 +14,16 @@ npm install
 npm run start
 ```
 
-## Curriculum
-* Meet the Node consoles
+After you run these commands, you can open up ```./server_START.js ``` and follow along with the comments, the README, and if you get REALLY stuck, you can take a look at ```./server_FINAL.js```
+
+
+*Final Note: You will NOT be able to hand this in to "Complete" the task in FCC. You can only do that if you use their glitch.com repository, which is where some people are having problems. Oh well, we're here for the knowledge anyway, not for a tick in a box, right?* 😸
+## Curriculum 🏫 💻
+* Meet the Node consoles 🤝
   * Log "Hello World" from the server
   * server.js - line 23
 
-* Start a Working Express Server
+* Start a Working Express Server 🔰
   * At the bottom of your code, use app.listen(PORT, HANDLER) to begin listening for other app.METHODs
     * server.js - line 21
   * Create another route via ```app.get()```
@@ -24,7 +32,7 @@ npm run start
   * set its path as the first argument to ```app.get()```
   * send "Hello Express" via the ```app.send()``` method
 
-* Serve an HTML File
+* Serve an HTML File 📰
   * Create another route and set its path
   * This time, instead of sending a string like "Hello Express":
     * Serve an HTML file you're written using the ```app.sendFile()``` method
@@ -32,26 +40,26 @@ npm run start
       * Then, use the inherit global variable ```__dirname``` to calculate the path passed to ```path.join()```
       * server.js - line 12
 
-* Serve Static Assets
+* Serve Static Assets 🎁
   * Create a directory that will be served to the client, typically "public", "static", "client" etc...
   * Using ```app.use()```, signal the app to use your new directory via the static method on the express object called ```express.static()```
   * ```express.static()``` is formatted as such:
     * express.static(PATH_TO_THE_STATIC_DIRECTORY)
     * Since this is another case of an **absolute path**, we will be using ```__dirname``` and ```path.join()```
 
-* Serve JSON on a Specific Route
+* Serve JSON on a Specific Route ⤴️
   * To implement a **RESTful API**, we'll need to serve up a json file of our making
   * First, create your .json
     * Here we'll create a directory called data and place our json in there
   * Then using ```app.get()```
  
-* Use the .env File
+* Use the .env File 🌲🌻
   * The .env file is a hidden file used to store **environment variables** ie. PORT, Database URL, API Keys, etc.
   * First, create your .env file in your root directory.
     * The format for the variables declared here is as follows:
       * ```ENV_VARIABLE="value"```
       * Variable names, since their CONSTANTs, should be uppercase
-      * There musn't be any spaces between the "=" in the assignment
+      * There mustn't be any spaces between the "=" in the assignment
   * Next, you'll need a package called **dotenv**
     * In your terminal, ```npm i dotenv --save```
   * Then, as early as possible in your server.js...
@@ -62,7 +70,7 @@ npm run start
   * Lastly, in order to use the variables, you can reference them off of the process.env object literal
     * server.js - line 32, 33 (```process.env.PORT ```)
 
-* Implement a Root-Level Request Logger Middleware
+* Implement a Root-Level Request Logger Middleware 🌳
   * A Middleware function is in the following format:
     * ```js 
       function middleWareFunction(request, response, next){
@@ -75,7 +83,7 @@ npm run start
     ```req.method```, ```req.path```, and ```req.ip```, all of which are metadata surrounding our HTTP traffic
   * Lastly, 
 
-* Chain Middleware to Create a Time Server
+* Chain Middleware to Create a Time Server ⛓
   * Middleware can be mounted to a **SPECIFIC** route by using the following format:
     * ```app.METHOD(path, middlewareFunction)```
     * You can also chain multiple middleware functions like so:
@@ -93,7 +101,7 @@ npm run start
   * Lastly, create your route using ```app.get(...)``` and use ```res.send(req.customProperty)```
     * ```server.js``` - line 56
 
-* Get Route Parameter Input from the Client
+* Get Route Parameter Input from the Client 🚸
   * In order to accomplish this task, we'll need to use ```req.params``` which will provide us any queries passed via the url
     * ```req.params``` returns undefined, unless there is a dynamic URL
   * We'll also need to use a **dynamic url** in our express server
@@ -102,10 +110,10 @@ npm run start
   * Server.js - line 58 (dynamic URL) + 59 (req.params)
 
 
-* Get Query Parameter Input from the Client
+* Get Query Parameter Input from the Client 🚸
   * A query in the URL is in the following format:
     * ```yourpage.com/yourRoute?key=value&key2=value2```
-      * Note the "?" to begin query and the "&" to seperate multiple queries
+      * Note the "?" to begin query and the "&" to separate multiple queries
   * In order to access the query in your code:
     * ```req.query``` will give you your entire query object
     * ```req.query[key]``` or ```req.query.key``` will get you the direct value
@@ -113,13 +121,13 @@ npm run start
       * server.js - line 66 (logic flow)
     * server.js  - line 67 (sending direct values)
 
-* Use body-parser to Parse POST Requests
+* Use body-parser to Parse POST Requests 📮🏣
   * Mounting the body-parser is as easy as:
     * ```js const bodyParser = require('body-parser')```
     * Or in my case:
       * server.js - line 6 (const parse = ...)
 
-* Get Data from POST Requests
+* Get Data from POST Requests 📮🏣
   * Now in order to demonstrate this, I had to make the simplest form possible to get to the point:
     * views/form.html - lines 10 - 18
     * Your form tag just needs to be fed the method to be used when the form is submitted and most importantly, the route that will receive the information.
@@ -163,14 +171,14 @@ npm run start
 * ```.env``` is normally included in the ```.gitignore``` in order to prevent your secret environment variables from being made public.
   * In our case, we'll leave it as is for educational purposes. It is important however to keep prevent this file from being posted online, ie. Github, Gitlab, etc...
 
-* Using the ```dotenv``` npm package is a typical best practice to seperate the app configuration from the app code.
+* Using the ```dotenv``` npm package is a typical best practice to separate the app configuration from the app code.
   * An alternative to this methodology, is to create a ```.env.js``` file, place your environment variables in a single object literal, export that single object, and then import and reference that object in your server.js
-  * The downside to this, is in your deployment stage, when you have environment variables stored in **production**, they'll end up being seperate from your variables stored in **development**. (ie. ```config.PORT``` vs ```process.env.PORT```)
+  * The downside to this, is in your deployment stage, when you have environment variables stored in **production**, they'll end up being separate from your variables stored in **development**. (ie. ```config.PORT``` vs ```process.env.PORT```)
 
 * Morgan is an express middleware function used to create log files or the incoming HTTP requests.
   * By creating a ```writeStream``` using the internal ```fs``` library, we're able to take the HTTP requests and create an access.log file
 
-* In an effort to keep our ```server.js``` file a little neater, I decided to keep our middleware definitions in a seperate file.
+* In an effort to keep our ```server.js``` file a little neater, I decided to keep our middleware definitions in a separate file.
   * We'll be defining our Middleware functions in ```customMiddleware.js```
   * Import: server.js - line 7
 
